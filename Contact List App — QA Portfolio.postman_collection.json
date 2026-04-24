@@ -1,0 +1,1748 @@
+{
+  "info": {
+    "_postman_id": "45ce6133-6aa3-46ff-bb24-af86321cf413",
+    "name": "Contact List App — QA Portfolio",
+    "description": "Full API test suite for the Contact List App. Run in order: Register → Login → Add Contact → Get/Update/Delete → Negative tests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54164003",
+    "_collection_link": "https://go.postman.co/collection/54164003-45ce6133-6aa3-46ff-bb24-af86321cf413?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Registration and Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201 - user created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('token');",
+                  "});",
+                  "pm.test(\"Response contains user object\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('user');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "pm.test(\"User has correct email\", function () {",
+                  "pm.expect(pm.response.json().user.email).to.equal(\"bogdan_test@example.com\");",
+                  "});",
+                  "pm.test(\"User has correct first name\", function () {",
+                  "pm.expect(pm.response.json().user.firstName).to.equal(\"Bogdan\");",
+                  "});",
+                  "pm.test(\"User has correct last name\", function () {",
+                  "pm.expect(pm.response.json().user.lastName).to.equal(\"Test\");",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Register User Duplicate Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is Duplicate Key for Email\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Email address is already in use\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Login - Wrong Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 for wrong password\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Does not return a token\", function () {",
+                  "    const responseText = pm.response.text();",
+                  "    if (responseText) {",
+                  "        pm.expect(pm.response.json()).to.not.have.property('token');",
+                  "    } else {",
+                  "        pm.expect(responseText).to.be.empty;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"wrongpassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Login - Missing Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 for missing email\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "console.log('Token saved:', body.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "Add Contact",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201 - contact created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Contact has _id\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"First name matches\", function () {",
+                  "    pm.expect(pm.response.json().firstName).to.equal('Bogdan');",
+                  "});",
+                  "pm.test(\"Email matches\", function () {",
+                  "    pm.expect(pm.response.json().email).to.equal('bogdan@test.com');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "pm.collectionVariables.set('contactId', pm.response.json()._id);",
+                  "console.log('Contact ID saved:', pm.response.json()._id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Contacts",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "pm.test(\"Array is not empty\", function () {",
+                  "    pm.expect(pm.response.json().length).to.be.above(0);",
+                  "});",
+                  "pm.test(\"Each contact has _id\", function () {",
+                  "    pm.response.json().forEach(function(c) { pm.expect(c).to.have.property('_id'); });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Contact by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Returns correct contact ID\", function () {",
+                  "    pm.expect(pm.response.json()._id).to.equal(pm.collectionVariables.get('contactId'));",
+                  "});",
+                  "pm.test(\"Has firstName, lastName, email\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('firstName');",
+                  "    pm.expect(body).to.have.property('lastName');",
+                  "    pm.expect(body).to.have.property('email');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Contact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"First name updated\", function () {",
+                  "    pm.expect(pm.response.json().firstName).to.equal('UpdatedBogdan');",
+                  "});",
+                  "pm.test(\"City updated\", function () {",
+                  "    pm.expect(pm.response.json().city).to.equal('Manchester');",
+                  "});",
+                  "pm.test(\"Email still present after PATCH\", function () {",
+                  "    pm.expect(pm.response.json().email).to.not.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"UpdatedBogdan\",\n    \"city\": \"Manchester\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Contact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200 - contact deleted\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('contactId', '');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests - Contact- Authenticated",
+      "item": [
+        {
+          "name": "[NEGATIVE] Add Contact - No Auth Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 without auth token\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Contact is not created\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - Empty Body",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - Invalid post code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Validation failed\", function () {",
+                  "    pm.expect(pm.response.json().message).to.equal('Contact validation failed: postalCode: Postal code is invalid');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"EC1A1\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Get Contact - Invalid ID",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400 or 404 for invalid ID\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/invalidid123",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "invalidid123"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests  - Logged out",
+      "item": [
+        {
+          "name": "Add Contact (need user ID for next tests)",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201 - contact created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Contact has _id\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"First name matches\", function () {",
+                  "    pm.expect(pm.response.json().firstName).to.equal('Bogdan');",
+                  "});",
+                  "pm.test(\"Email matches\", function () {",
+                  "    pm.expect(pm.response.json().email).to.equal('bogdan@test.com');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "pm.collectionVariables.set('contactId', pm.response.json()._id);",
+                  "console.log('Contact ID saved:', pm.response.json()._id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE][USER] Logged Out - Get Current User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE][USER] Logged Out - Update User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE][USER] Logged Out - Delete User Account",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Logged Out - Get All Contacts",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Logged Out - Get Contact by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Logged Out - Update Contact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"UpdatedBogdan\",\n    \"city\": \"Manchester\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Logged Out - Delete Contact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Logged Out - Add Contact",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test(\"Error\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('error');",
+                  "});",
+                  "",
+                  "pm.test(\"Please authenticate\", function () {",
+                  "    pm.expect(pm.response.json().error).to.equal('Please authenticate.');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login (for contact cleanup)",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "console.log('Token saved:', body.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Contact (for DB cleanup)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200 - contact deleted\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('contactId', '');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/{{contactId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "{{contactId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get Current User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Returns correct user ID\", function () {",
+                  "    pm.expect(pm.response.json()._id).to.equal(pm.collectionVariables.get('userId'));",
+                  "});",
+                  "pm.test(\"User has firstName and lastName\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('firstName');",
+                  "    pm.expect(body).to.have.property('lastName');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Update User Email Already In Use",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is MongoError\", function () {",
+                  "    pm.expect(pm.response.json().name).to.equal(\"MongoError\");",
+                  "});",
+                  "pm.test(\"Error is Duplicate Key for Email\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.code).to.equal(11000);",
+                  "    pm.expect(jsonData.keyValue).to.have.property('email');",
+                  "    pm.expect(jsonData.keyValue.email).to.equal(\"test2@fake.com\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Updated1\",\n    \"lastName\": \"Username1\",\n    \"email\": \"test2@fake.com\",\n    \"password\": \"myNewPassword111\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"User has correct email\", function () {",
+                  "    pm.expect(pm.response.json().email).to.equal(\"asds@fbytu345gf.com\");",
+                  "});",
+                  "pm.test(\"User has correct first name\", function () {",
+                  "    pm.expect(pm.response.json().firstName).to.equal(\"Updated\");",
+                  "});",
+                  "pm.test(\"User has correct last name\", function () {",
+                  "    pm.expect(pm.response.json().lastName).to.equal(\"Username\");",
+                  "});",
+                  "",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Login Old Credentials",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 for wrong password\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Does not return a token\", function () {",
+                  "    const responseText = pm.response.text();",
+                  "    if (responseText) {",
+                  "        pm.expect(pm.response.json()).to.not.have.property('token');",
+                  "    } else {",
+                  "        pm.expect(responseText).to.be.empty;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Updated Credentials",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "console.log('Token saved:', body.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User Account",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200 - user deleted\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('token', '');",
+                  "pm.collectionVariables.set('userId', '');",
+                  "pm.collectionVariables.set('contactId', '');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://thinking-tester-contact-list.herokuapp.com",
+      "description": "Base URL for the Contact List API"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "description": "JWT token - saved automatically after Login"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "description": "User ID - saved automatically after Login"
+    },
+    {
+      "key": "contactId",
+      "value": "",
+      "description": "Contact ID - saved automatically after Add Contact"
+    }
+  ]
+}
