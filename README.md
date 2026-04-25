@@ -22,7 +22,7 @@ This collection covers end-to-end API testing including authentication, full CRU
 | User | Full user lifecycle — get, update credentials, logout, delete account |
 | Negative Tests - Contact - Authenticated | Missing fields, invalid ID, invalid postcode validation |
 | Negative Tests - Logged Out | Verify all user and contact endpoints are protected after logout |
-| Security | BOLA testing — verify User 2 cannot access or modify User 1's data |
+| Security | NoSQL injection, BOLA testing — verify User 2 cannot access or modify User 1's data |
 | Cleanup | Delete test contacts and accounts after each run |
 
 ## Types of Tests
@@ -30,6 +30,7 @@ This collection covers end-to-end API testing including authentication, full CRU
 - **Functional** — status codes, response values, field validation
 - **Contract** — JSON schema validation on key endpoints to catch breaking API changes
 - **Security** — BOLA/IDOR checks verifying data isolation between users
+- **Security** - NoSQL Injection — MongoDB operator injection attempts (`$gt`, `$where`, `$regex`) on login and contact endpoints to verify inputs are sanitised before reaching the database
 - **Negative** — invalid inputs, missing auth, expired tokens, duplicate data
 
 ## How to Run
@@ -64,6 +65,8 @@ This collection covers end-to-end API testing including authentication, full CRU
 - No environment required — all variables are stored at collection level
 - The Cleanup folder runs at the end of every Collection Runner execution to remove test data
 - Security tests use a second user account (`hacker@example.com`) to simulate BOLA attacks
-- > **Bug #2 reproduction steps:** Clear the `contactId` collection variable, 
-> then send `PATCH {{base_url}}/contacts/` with a valid auth token. 
-> The server returns a Heroku HTML error page instead of a `400 Bad Request`.
+- NoSQL injection via `$gt` operator in contact fields is blocked by Mongoose schema type validation rather than explicit input sanitisation. Fields accepting object types may remain vulnerable.
+- Bug #2 reproduction steps:
+  > Clear the `contactId` collection variable, 
+  > Send `PATCH {{base_url}}/contacts/` with a valid auth token. 
+  > The server returns a Heroku HTML error page instead of a `400 Bad Request`
