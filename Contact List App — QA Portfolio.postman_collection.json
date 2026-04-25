@@ -1658,66 +1658,225 @@
       "name": "SECURITY",
       "item": [
         {
-          "name": "Login User for security tests",
-          "event": [
+          "name": "NoSQL injection",
+          "item": [
             {
-              "script": {
-                "exec": [
-                  "pm.test(\"Status is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test(\"Response contains token\", function () {",
-                  "    const body = pm.response.json();",
-                  "    pm.expect(body).to.have.property('token');",
-                  "    pm.expect(body.token).to.not.be.empty;",
-                  "});",
-                  "pm.test(\"Response contains user ID\", function () {",
-                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
-                  "});",
-                  "pm.test(\"Response time under 3000ms\", function () {",
-                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
-                  "});",
-                  "const body = pm.response.json();",
-                  "pm.collectionVariables.set('token', body.token);",
-                  "pm.collectionVariables.set('userId', body.user._id);",
-                  "console.log('Token saved:', body.token);"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              },
-              "listen": "test"
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "name": "Login User for security tests",
+              "event": [
+                {
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test(\"Response contains token\", function () {",
+                      "    const body = pm.response.json();",
+                      "    pm.expect(body).to.have.property('token');",
+                      "    pm.expect(body.token).to.not.be.empty;",
+                      "});",
+                      "pm.test(\"Response contains user ID\", function () {",
+                      "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                      "});",
+                      "pm.test(\"Response time under 3000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "});",
+                      "const body = pm.response.json();",
+                      "pm.collectionVariables.set('token', body.token);",
+                      "pm.collectionVariables.set('userId', body.user._id);",
+                      "console.log('Token saved:', body.token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  },
+                  "listen": "test"
                 }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/users/login",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "users",
-                "login"
-              ]
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login NoSQL injection attempt",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"[SECURITY] NoSQL injection does not bypass login\", function () {",
+                      "    pm.expect(pm.response.code).to.not.equal(200);",
+                      "});",
+                      "",
+                      "pm.test(\"[SECURITY] No token returned on injection attempt\", function () {",
+                      "    const text = pm.response.text();",
+                      "    pm.expect(text).to.not.include(\"token\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": { \"$gt\": \"\" },\n  \"password\": { \"$gt\": \"\" }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "$where operator injection",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"[SECURITY] Server not vulnerable to $where injection\", function () {",
+                      "    pm.expect(pm.response.code).to.not.equal(200);",
+                      "});",
+                      "",
+                      "pm.test(\"[SECURITY] Response time not delayed by injection\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": { \"$where\": \"sleep(5000)\" },\n  \"password\": \"anything\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Contact - field injection",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"[SECURITY] NoSQL operator rejected in firstName field\", function () {",
+                      "    pm.expect(pm.response.code).to.equal(400);",
+                      "});",
+                      "",
+                      "pm.test(\"[SECURITY] Rejection is due to type validation not explicit sanitisation\", function () {",
+                      "    const body = pm.response.json();",
+                      "    pm.expect(body.message).to.include(\"Cast to string failed\");",
+                      "});",
+                      "",
+                      "pm.test(\"[SECURITY] Contact was not created\", function () {",
+                      "    pm.expect(pm.response.code).to.not.equal(201);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": { \"$gt\": \"\" },\n  \"lastName\": \"Test\",\n  \"email\": \"test@test.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/contacts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         },
         {
           "name": "Register User 2",
