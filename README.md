@@ -29,8 +29,7 @@ This collection covers end-to-end API testing including authentication, full CRU
 
 - **Functional** — status codes, response values, field validation
 - **Contract** — JSON schema validation on key endpoints to catch breaking API changes
-- **Security** — BOLA/IDOR checks verifying data isolation between users
-- **Security** - NoSQL Injection — MongoDB operator injection attempts (`$gt`, `$where`, `$regex`) on login and contact endpoints to verify inputs are sanitised before reaching the database
+- **Security** - NoSQL Injection — MongoDB operator injection attempts (`$gt`, `$where`, `$regex`) on login and contact endpoints to verify inputs are sanitised before reaching the database || BOLA/IDOR checks verifying data isolation between users
 - **Negative** — invalid inputs, missing auth, expired tokens, duplicate data
 
 ## How to Run
