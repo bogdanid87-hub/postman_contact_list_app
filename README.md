@@ -11,7 +11,7 @@ This collection covers end-to-end API testing including authentication, full CRU
 - **Tool:** Postman
 - **API Under Test:** [Contact List App](https://thinking-tester-contact-list.herokuapp.com/)
 - **Auth:** JWT Bearer Token
-- **API Docs:** [Swagger](https://thinking-tester-contact-list.herokuapp.com/api-docs/)
+- **API Docs:** [Postman Contact List Documentation](https://documenter.getpostman.com/view/4012288/TzK2bEa8/)
 
 ## Test Coverage
 
