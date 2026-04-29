@@ -1,23 +1,287 @@
 {
   "info": {
-    "_postman_id": "45ce6133-6aa3-46ff-bb24-af86321cf413",
+    "_postman_id": "de57fe00-f95c-4957-af64-e78715a81a1e",
     "name": "Contact List App — QA Portfolio",
-    "description": "Full API test suite covering authentication, CRUD operations, contract validation, security (BOLA) testing, and negative scenarios. Tokens and IDs chain automatically between requests — run folders in order using the Collection Runner.",
+    "description": "Full API test suite covering authentication, CRUD operations, contract validation, security (BOLA) testing, and negative scenarios. Tokens and IDs chain automatically between requests — run folders in order using the Collection Runner.\n\nThe email addresses are intentionally obscure - this is a shared public API and realistic looking emails risk conflicting with another tester's data.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "54164003",
-    "_collection_link": "https://go.postman.co/collection/54164003-45ce6133-6aa3-46ff-bb24-af86321cf413?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/54164003-de57fe00-f95c-4957-af64-e78715a81a1e?source=collection_link"
   },
   "item": [
     {
       "name": "Registration and Auth",
       "item": [
         {
-          "name": "Register User",
+          "name": "[NEGATIVE] Register User Missing First Name",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is User validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"User validation failed: firstName: Path `firstName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"lastName\": \"Test\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Register User Missing Last Name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is User validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"User validation failed: lastName: Path `lastName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Register User Missing Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is User validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"User validation failed: password: Path `password` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Register User Invalid Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error is User validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"User validation failed: email: Email is invalid\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"hkr_9p3n@.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE][KNOWN BUG] Register User Invalid Names",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// KNOWN BUG: API accepts special characters and symbols in firstName.",
+                  "// Expected behaviour: 400 with a validation error.",
+                  "// Actual behaviour: 201 - user is created with an invalid name.",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"[KNOWN BUG] API incorrectly accepts invalid firstName - returns 201\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "    pm.test(\"[KNOWN BUG] User created with special characters in firstName\", function () {",
+                  "        pm.expect(pm.response.json().user.firstName).to.equal(\"§2#\");",
+                  "        pm.expect(pm.response.json().user.lastName).to.equal(\"*(^5\");",
+                  "    });",
+                  "} else {",
+                  "    pm.test(\"Register skipped (user exists) — suite will self-correct via Cleanup\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(400);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"§2#\",\n    \"lastName\": \"*(^5\",\n    \"email\": \"BUG_xt7k2@fbytu345gf.com\",\n    \"password\": \"BUGmyPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Attempts to register a user with special characters and symbols as first and last names. The API performs no input validation on the firstName & lastName fields and creates the account successfully, returning 201. Expected behaviour: 400 with a name validation error."
+          },
+          "response": []
+        },
+        {
+          "name": "Register User 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Note: will return 400 on re-run if previous cleanup didn't complete.",
+                  "// This is expected — Login below will still succeed and the suite self-corrects.",
+                  "if (pm.response.code === 201) {",
                   "pm.test(\"Status is 201 - user created\", function () {",
                   "    pm.response.to.have.status(201);",
                   "});",
@@ -31,15 +295,20 @@
                   "    pm.expect(pm.response.responseTime).to.be.below(3000);",
                   "});",
                   "pm.test(\"User has correct email\", function () {",
-                  "pm.expect(pm.response.json().user.email).to.equal(\"bogdan_test@example.com\");",
+                  "pm.expect(pm.response.json().user.email).to.equal(\"qa_xt7k2@fbytu345gf.com\");",
                   "});",
                   "pm.test(\"User has correct first name\", function () {",
-                  "pm.expect(pm.response.json().user.firstName).to.equal(\"Bogdan\");",
+                  "pm.expect(pm.response.json().user.firstName).to.equal(\"QA\");",
                   "});",
                   "pm.test(\"User has correct last name\", function () {",
                   "pm.expect(pm.response.json().user.lastName).to.equal(\"Test\");",
                   "});",
-                  "",
+                  "} else",
+                  "{",
+                  "    pm.test(\"Register skipped (user exists) — suite will self-correct via Login\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(400);",
+                  "    });",
+                  "}",
                   ""
                 ],
                 "type": "text/javascript",
@@ -58,7 +327,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -73,7 +342,158 @@
               "path": [
                 "users"
               ]
+            },
+            "description": "Creates the 1st user which will be used for most tests"
+          },
+          "response": []
+        },
+        {
+          "name": "Register User 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Note: will return 400 on re-run if previous cleanup didn't complete.",
+                  "// This is expected — Login below will still succeed and the suite self-corrects.",
+                  "if (pm.response.code === 201) {",
+                  "pm.test(\"Status is 201 - user created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('token');",
+                  "});",
+                  "pm.test(\"Response contains user object\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('user');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "pm.test(\"User has correct email\", function () {",
+                  "pm.expect(pm.response.json().user.email).to.equal(\"hkr_9p3n@fbytu345gf.com\");",
+                  "});",
+                  "pm.test(\"User has correct first name\", function () {",
+                  "pm.expect(pm.response.json().user.firstName).to.equal(\"Hacker\");",
+                  "});",
+                  "pm.test(\"User has correct last name\", function () {",
+                  "pm.expect(pm.response.json().user.lastName).to.equal(\"User\");",
+                  "});",
+                  "} else",
+                  "{",
+                  "    pm.test(\"Register skipped (user exists) — suite will self-correct via Login\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(400);",
+                  "    });",
+                  "}",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Hacker\",\n  \"lastName\": \"User\",\n  \"email\": \"hkr_9p3n@fbytu345gf.com\",\n  \"password\": \"hackerPass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Creates the 2nd user, which will be used for security tests"
+          },
+          "response": []
+        },
+        {
+          "name": "Register User 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Note: will return 400 on re-run if previous cleanup didn't complete.",
+                  "// This is expected — Login below will still succeed and the suite self-corrects.",
+                  "if (pm.response.code === 201) {",
+                  "pm.test(\"Status is 201 - user created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('token');",
+                  "});",
+                  "pm.test(\"Response contains user object\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('user');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "pm.test(\"User has correct email\", function () {",
+                  "pm.expect(pm.response.json().user.email).to.equal(\"thrd_usr_9p3n@fbytu345gf.com\");",
+                  "});",
+                  "pm.test(\"User has correct first name\", function () {",
+                  "pm.expect(pm.response.json().user.firstName).to.equal(\"Third\");",
+                  "});",
+                  "pm.test(\"User has correct last name\", function () {",
+                  "pm.expect(pm.response.json().user.lastName).to.equal(\"User\");",
+                  "});",
+                  "} else",
+                  "{",
+                  "    pm.test(\"Register skipped (user exists) — suite will self-correct via Login\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(400);",
+                  "    });",
+                  "}",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Third\",\n  \"lastName\": \"User\",\n  \"email\": \"thrd_usr_9p3n@fbytu345gf.com\",\n  \"password\": \"thirdUserPass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Creates a dedicated user for the Update User tests. Using a separate account ensures User 1's credentials remain unchanged throughout the suite, preventing downstream failures in the SECURITY folder in case tests are run out of order"
           },
           "response": []
         },
@@ -108,7 +528,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"hkr_9p3n@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -162,7 +582,62 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"wrongpassword\"\n}",
+              "raw": "{\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"wrongpassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Login - Wrong Email",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 for wrong email\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Does not return a token\", function () {",
+                  "    const responseText = pm.response.text();",
+                  "    if (responseText) {",
+                  "        pm.expect(pm.response.json()).to.not.have.property('token');",
+                  "    } else {",
+                  "        pm.expect(responseText).to.be.empty;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"wrong_qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -230,7 +705,7 @@
           "response": []
         },
         {
-          "name": "Login",
+          "name": "Login User 1",
           "event": [
             {
               "script": {
@@ -269,7 +744,7 @@
                   "                    lastName:  { type: \"string\" },",
                   "                    email:     { type: \"string\" }",
                   "                },",
-                  "               // additionalProperties: false",
+                  "",
                   "            }",
                   "        },",
                   "        additionalProperties: false",
@@ -304,7 +779,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "raw": "{\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -342,10 +817,10 @@
                   "    pm.expect(pm.response.json()).to.have.property('_id');",
                   "});",
                   "pm.test(\"First name matches\", function () {",
-                  "    pm.expect(pm.response.json().firstName).to.equal('Bogdan');",
+                  "    pm.expect(pm.response.json().firstName).to.equal('QA');",
                   "});",
                   "pm.test(\"Email matches\", function () {",
-                  "    pm.expect(pm.response.json().email).to.equal('bogdan@test.com');",
+                  "    pm.expect(pm.response.json().email).to.equal('cntct_4j8q@fbytu345gf.com');",
                   "});",
                   "pm.test(\"Response time under 3000ms\", function () {",
                   "    pm.expect(pm.response.responseTime).to.be.below(3000);",
@@ -371,9 +846,18 @@
                   "            country:       { type: \"string\" },",
                   "            owner:         { type: \"string\" }",
                   "        },",
-                  "     //   additionalProperties: false",
                   "    };",
                   "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] No sensitive fields exposed\", function () {",
+                  "    const body = pm.response.json();",
+                  "    // __v is a known Mongoose version key present in this API's responses.",
+                  "    // Flagged as a finding: ORM internals should ideally be suppressed.",
+                  "    const forbidden = [\"password\", \"tokens\", \"hash\", \"passwordHash\"];",
+                  "    forbidden.forEach(field => {",
+                  "        pm.expect(body).to.not.have.property(field);",
+                  "    });",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -387,17 +871,13 @@
             "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -432,7 +912,7 @@
                   "    pm.expect(pm.response.json().firstName).to.equal('Adam');",
                   "});",
                   "pm.test(\"Email matches\", function () {",
-                  "    pm.expect(pm.response.json().email).to.equal('adam@test.com');",
+                  "    pm.expect(pm.response.json().email).to.equal('cntct2_5r6w@fbytu345gf.com');",
                   "});",
                   "pm.test(\"Response time under 3000ms\", function () {",
                   "    pm.expect(pm.response.responseTime).to.be.below(3000);",
@@ -458,9 +938,17 @@
                   "            country:       { type: \"string\" },",
                   "            owner:         { type: \"string\" }",
                   "        },",
-                  "     //   additionalProperties: false",
                   "    };",
                   "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "pm.test(\"[CONTRACT] No sensitive fields exposed\", function () {",
+                  "    const body = pm.response.json();",
+                  "    // __v is a known Mongoose version key present in this API's responses.",
+                  "    // Flagged as a finding: ORM internals should ideally be suppressed.",
+                  "    const forbidden = [\"password\", \"tokens\", \"hash\", \"passwordHash\"];",
+                  "    forbidden.forEach(field => {",
+                  "        pm.expect(body).to.not.have.property(field);",
+                  "    });",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -474,17 +962,13 @@
             "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Adam\",\n    \"lastName\": \"Wright\",\n    \"birthdate\": \"1996-01-01\",\n    \"email\": \"adam@test.com\",\n    \"phone\": \"8005660100\",\n    \"street1\": \"2 Test Street\",\n    \"city\": \"Liverpool\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"L1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"Adam\",\n    \"lastName\": \"Wright\",\n    \"birthdate\": \"1996-01-01\",\n    \"email\": \"cntct2_5r6w@fbytu345gf.com\",\n    \"phone\": \"8005660100\",\n    \"street1\": \"2 Test Street\",\n    \"city\": \"Liverpool\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"L1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -515,11 +999,22 @@
                   "pm.test(\"Response is an array\", function () {",
                   "    pm.expect(pm.response.json()).to.be.an('array');",
                   "});",
-                  "pm.test(\"Both contacts present\", function () {",
-                  "    pm.expect(pm.response.json().length).to.be.at.least(2);",
-                  "});",
                   "pm.test(\"Each contact has _id\", function () {",
                   "    pm.response.json().forEach(function(c) { pm.expect(c).to.have.property('_id'); });",
+                  "});",
+                  "pm.test(\"Response contains the expected _id values\", function () {",
+                  "    const body = pm.response.json(); // Array: [{_id: '...'}, {_id: '...'}]",
+                  "    ",
+                  "    // Explicitly pull from Collection Variables",
+                  "    const expectedId1 = pm.collectionVariables.get(\"contactId\");",
+                  "    const expectedId2 = pm.collectionVariables.get(\"contactId2\");",
+                  "",
+                  "    // Check if any object in the array has the matching _id",
+                  "    const foundId1 = body.some(item => item._id === expectedId1);",
+                  "    const foundId2 = body.some(item => item._id === expectedId2);",
+                  "",
+                  "    pm.expect(foundId1, `Collection variable contactId (${expectedId1}) not found in response`).to.be.true;",
+                  "    pm.expect(foundId2, `Collection variable contactId2 (${expectedId2}) not found in response`).to.be.true;",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -535,6 +1030,11 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -567,6 +1067,7 @@
                   "    pm.expect(body).to.have.property('firstName');",
                   "    pm.expect(body).to.have.property('lastName');",
                   "    pm.expect(body).to.have.property('email');",
+                  "",
                   "});",
                   "",
                   "pm.test(\"[CONTRACT] Contact schema is valid\", function () {",
@@ -588,7 +1089,7 @@
                   "            country:       { type: \"string\" },",
                   "            owner:         { type: \"string\" }",
                   "        },",
-                  "      //  additionalProperties: false",
+                  "",
                   "    };",
                   "    pm.response.to.have.jsonSchema(schema);",
                   "});",
@@ -597,10 +1098,14 @@
                   "    pm.expect(pm.response.json()._id).to.be.a(\"string\").and.not.be.empty;",
                   "});",
                   "",
-                  "pm.test(\"[CONTRACT] Response does not expose password or sensitive fields\", function () {",
+                  "pm.test(\"[CONTRACT] No sensitive fields exposed\", function () {",
                   "    const body = pm.response.json();",
-                  "    pm.expect(body).to.not.have.property(\"password\");",
-                  "    pm.expect(body).to.not.have.property(\"tokens\");",
+                  "    // __v is a known Mongoose version key present in this API's responses.",
+                  "    // Flagged as a finding: ORM internals should ideally be suppressed.",
+                  "    const forbidden = [\"password\", \"tokens\", \"hash\", \"passwordHash\"];",
+                  "    forbidden.forEach(field => {",
+                  "        pm.expect(body).to.not.have.property(field);",
+                  "    });",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -615,6 +1120,11 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -641,13 +1151,13 @@
                   "    pm.response.to.have.status(200);",
                   "});",
                   "pm.test(\"First name updated\", function () {",
-                  "    pm.expect(pm.response.json().firstName).to.equal('UpdatedBogdan');",
+                  "    pm.expect(pm.response.json().firstName).to.equal('UpdatedQA');",
                   "});",
                   "pm.test(\"City updated\", function () {",
                   "    pm.expect(pm.response.json().city).to.equal('Manchester');",
                   "});",
                   "pm.test(\"Email still present after PATCH\", function () {",
-                  "    pm.expect(pm.response.json().email).to.not.be.empty;",
+                  "    pm.expect(pm.response.json().email).to.equal('cntct_4j8q@fbytu345gf.com')",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -660,17 +1170,13 @@
             "method": "PATCH",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"UpdatedBogdan\",\n    \"city\": \"Manchester\"\n}",
+              "raw": "{\n    \"firstName\": \"UpdatedQA\",\n    \"city\": \"Manchester\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -693,7 +1199,7 @@
       ]
     },
     {
-      "name": "Negative Tests - Contact- Authenticated",
+      "name": "Negative Tests - Contact - Authenticated",
       "item": [
         {
           "name": "[NEGATIVE] Add Contact - No Auth Token",
@@ -717,15 +1223,60 @@
           ],
           "request": {
             "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - Invalid Auth Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 401 with malformed auth token\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Contact is not created\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer garbage",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\"\n}",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -751,7 +1302,11 @@
               "script": {
                 "exec": [
                   "pm.test(\"Does not create contact with empty body\", function () {",
-                  "    pm.expect(pm.response.code).to.not.equal(201);",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: lastName: Path `lastName` is required., firstName: Path `firstName` is required.\");",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -765,10 +1320,6 @@
             "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
               }
@@ -776,6 +1327,106 @@
             "body": {
               "mode": "raw",
               "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - First Name Missing",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: firstName: Path `firstName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - Last Name Missing",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: lastName: Path `lastName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -826,12 +1477,69 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"EC1A1\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"EC1A1\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact XML",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// OBSERVATION: API does not enforce Content-Type on incoming requests.",
+                  "// Sending application/xml with an XML body produces the same 400 as an empty",
+                  "// body — the XML is silently discarded by Express's JSON middleware rather",
+                  "// than rejected with 415 Unsupported Media Type.",
+                  "// No explicit Content-Type requirement is documented for this API.",
+                  "// Raised as an observation: a hardened API would reject unsupported types explicitly.",
+                  "",
+                  "pm.test(\"[OBSERVATION] API returns 400 not 415 for unsupported Content-Type\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"[OBSERVATION] Body is discarded — falls through to validation failure\", function () {",
+                  "    pm.expect(pm.response.json().message).to.include(\"Contact validation failed\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/xml"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<root>\n  <firstName>Third</firstName>\n  <lastName>User</lastName>\n  <email>thrd_usr_9p3n@fbytu345gf.com</email>\n  <password>thirdUserPass123</password>\n</root>"
             },
             "url": {
               "raw": "{{base_url}}/contacts",
@@ -868,8 +1576,108 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
+            "url": {
+              "raw": "{{base_url}}/contacts/invalidid123",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "invalidid123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Delete Contact - Invalid ID",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400 or 404 for invalid ID\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/invalidid123",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts",
+                "invalidid123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Update Contact - Invalid ID",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400 or 404 for invalid ID\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Updated\",\n    \"city\": \"Liverpool\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/contacts/invalidid123",
               "host": [
@@ -889,6 +1697,101 @@
       "name": "User",
       "item": [
         {
+          "name": "Login User 3",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token3', body.token);",
+                  "pm.collectionVariables.set('userId3', body.user._id);",
+                  "console.log('Token saved:', body.token);",
+                  "",
+                  "pm.test(\"[CONTRACT] Login response schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"token\", \"user\"],",
+                  "        properties: {",
+                  "            token: { type: \"string\" },",
+                  "            user: {",
+                  "                type: \"object\",",
+                  "                required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "                properties: {",
+                  "                    _id:       { type: \"string\" },",
+                  "                    firstName: { type: \"string\" },",
+                  "                    lastName:  { type: \"string\" },",
+                  "                    email:     { type: \"string\" }",
+                  "                },",
+                  "",
+                  "            }",
+                  "        },",
+                  "        additionalProperties: false",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Token is a non-empty string\", function () {",
+                  "    pm.expect(pm.response.json().token).to.be.a(\"string\").and.not.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Password not exposed in login response\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.not.have.property(\"password\");",
+                  "    pm.expect(body.user).to.not.have.property(\"password\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"thrd_usr_9p3n@fbytu345gf.com\",\n  \"password\": \"thirdUserPass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Get Current User",
           "event": [
             {
@@ -899,12 +1802,35 @@
                   "    pm.response.to.have.status(200);",
                   "});",
                   "pm.test(\"Returns correct user ID\", function () {",
-                  "    pm.expect(pm.response.json()._id).to.equal(pm.collectionVariables.get('userId'));",
+                  "    pm.expect(pm.response.json()._id).to.equal(pm.collectionVariables.get('userId3'));",
                   "});",
                   "pm.test(\"User has firstName and lastName\", function () {",
                   "    const body = pm.response.json();",
                   "    pm.expect(body).to.have.property('firstName');",
                   "    pm.expect(body).to.have.property('lastName');",
+                  "});",
+                  "pm.test(\"[CONTRACT] Created contact schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "        properties: {",
+                  "            _id:           { type: \"string\" },",
+                  "            firstName:     { type: \"string\" },",
+                  "            lastName:      { type: \"string\" },",
+                  "            email:         { type: \"string\" },",
+                  "        },",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] No sensitive fields exposed\", function () {",
+                  "    const body = pm.response.json();",
+                  "    // __v is a known Mongoose version key present in this API's responses.",
+                  "    // Flagged as a finding: ORM internals should ideally be suppressed.",
+                  "    const forbidden = [\"password\", \"tokens\", \"hash\", \"passwordHash\"];",
+                  "    forbidden.forEach(field => {",
+                  "        pm.expect(body).to.not.have.property(field);",
+                  "    });",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -918,7 +1844,12 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "value": "Bearer {{token3}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -935,7 +1866,7 @@
           "response": []
         },
         {
-          "name": "[NEGATIVE] Update User Email Already In Use",
+          "name": "[NEGATIVE][KNOWN BUG] Update User Email Already In Use",
           "event": [
             {
               "listen": "test",
@@ -944,6 +1875,9 @@
                   "pm.test(\"Status is 400\", function () {",
                   "    pm.response.to.have.status(400);",
                   "});",
+                  "// KNOWN BUG: API returns raw MongoError instead of a sanitised error message.",
+                  "// Documented in README. Test currently validates actual (buggy) behaviour.",
+                  "// Expected behaviour: 400 with { message: \"Email address is already in use\" }",
                   "pm.test(\"Error is MongoError\", function () {",
                   "    pm.expect(pm.response.json().name).to.equal(\"MongoError\");",
                   "});",
@@ -951,7 +1885,7 @@
                   "    const jsonData = pm.response.json();",
                   "    pm.expect(jsonData.code).to.equal(11000);",
                   "    pm.expect(jsonData.keyValue).to.have.property('email');",
-                  "    pm.expect(jsonData.keyValue.email).to.equal(\"test2@fake.com\");",
+                  "    pm.expect(jsonData.keyValue.email).to.equal(\"hkr_9p3n@fbytu345gf.com\");",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -965,12 +1899,12 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "value": "Bearer {{token3}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Updated1\",\n    \"lastName\": \"Username1\",\n    \"email\": \"test2@fake.com\",\n    \"password\": \"myNewPassword111\"\n}",
+              "raw": "{\n    \"firstName\": \"Updated1\",\n    \"lastName\": \"Username1\",\n    \"email\": \"hkr_9p3n@fbytu345gf.com\",\n    \"password\": \"myNewPassword111\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -986,7 +1920,8 @@
                 "users",
                 "me"
               ]
-            }
+            },
+            "description": "Attempts to update User 1's email to one already registered by another account. The API correctly returns 400, but instead of a handled error message it exposes a raw MongoDB duplicate key error in the response body, leaking internal database implementation details. This constitutes an improper error handling bug and a potential information disclosure vulnerability"
           },
           "response": []
         },
@@ -1002,7 +1937,7 @@
                   "});",
                   "",
                   "pm.test(\"User has correct email\", function () {",
-                  "    pm.expect(pm.response.json().email).to.equal(\"asds@fbytu345gf.com\");",
+                  "    pm.expect(pm.response.json().email).to.equal(\"asds234234@fbytu345gf.com\");",
                   "});",
                   "pm.test(\"User has correct first name\", function () {",
                   "    pm.expect(pm.response.json().firstName).to.equal(\"Updated\");",
@@ -1011,7 +1946,29 @@
                   "    pm.expect(pm.response.json().lastName).to.equal(\"Username\");",
                   "});",
                   "",
+                  "pm.test(\"[CONTRACT] Created contact schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "        properties: {",
+                  "            _id:           { type: \"string\" },",
+                  "            firstName:     { type: \"string\" },",
+                  "            lastName:      { type: \"string\" },",
+                  "            email:         { type: \"string\" },",
+                  "        },",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
                   "",
+                  "pm.test(\"[CONTRACT] No sensitive fields exposed\", function () {",
+                  "    const body = pm.response.json();",
+                  "    // __v is a known Mongoose version key present in this API's responses.",
+                  "    // Flagged as a finding: ORM internals should ideally be suppressed.",
+                  "    const forbidden = [\"password\", \"tokens\", \"hash\", \"passwordHash\"];",
+                  "    forbidden.forEach(field => {",
+                  "        pm.expect(body).to.not.have.property(field);",
+                  "    });",
+                  "});",
                   ""
                 ],
                 "type": "text/javascript",
@@ -1025,12 +1982,12 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}"
+                "value": "Bearer {{token3}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1046,7 +2003,8 @@
                 "users",
                 "me"
               ]
-            }
+            },
+            "description": "Verifies you can update user details"
           },
           "response": []
         },
@@ -1077,7 +2035,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{token}}",
+                "value": "Bearer {{token3}}",
                 "type": "text"
               }
             ],
@@ -1090,17 +2048,18 @@
                 "users",
                 "logout"
               ]
-            }
+            },
+            "description": "Log out the user in preparation for next test"
           },
           "response": []
         },
         {
-          "name": "[NEGATIVE] Login Old Credentials",
+          "name": "[NEGATIVE] Login with Pre-Update Credentials - Should Fail",
           "event": [
             {
               "script": {
                 "exec": [
-                  "pm.test(\"Returns 401 for wrong password\", function () {",
+                  "pm.test(\"Returns 401 - old credentials no longer valid\", function () {",
                   "    pm.response.to.have.status(401);",
                   "});",
                   "pm.test(\"Does not return a token\", function () {",
@@ -1129,7 +2088,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"bogdan_test@example.com\",\n    \"password\": \"myPassword123\"\n}",
+              "raw": "{\n  \"email\": \"thrd_usr_9p3n@fbytu345gf.com\",\n  \"password\": \"thirdUserPass123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1145,7 +2104,8 @@
                 "users",
                 "login"
               ]
-            }
+            },
+            "description": "Verifies the update user request worked correctly and the old credentials are no longer valid"
           },
           "response": []
         },
@@ -1170,8 +2130,8 @@
                   "    pm.expect(pm.response.responseTime).to.be.below(3000);",
                   "});",
                   "const body = pm.response.json();",
-                  "pm.collectionVariables.set('token', body.token);",
-                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "pm.collectionVariables.set('token3', body.token);",
+                  "pm.collectionVariables.set('userId3', body.user._id);",
                   "console.log('Token saved:', body.token);"
                 ],
                 "type": "text/javascript",
@@ -1183,15 +2143,10 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "raw": "{\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1207,14 +2162,15 @@
                 "users",
                 "login"
               ]
-            }
+            },
+            "description": "Verifies the update user request worked correctly and the user can login with the new credentials"
           },
           "response": []
         }
       ]
     },
     {
-      "name": "Negative Tests  - Logged out",
+      "name": "Negative Tests - Logged out",
       "item": [
         {
           "name": "Logout",
@@ -1256,7 +2212,8 @@
                 "users",
                 "logout"
               ]
-            }
+            },
+            "description": "Log out the user in preparation for next test"
           },
           "response": []
         },
@@ -1291,6 +2248,11 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1302,7 +2264,8 @@
                 "users",
                 "me"
               ]
-            }
+            },
+            "description": "Attempts to retrieve the current user's profile without an authentication token. Verifies that the API correctly rejects unauthenticated requests with a 401 response, confirming that user data is not accessible without a valid session."
           },
           "response": []
         },
@@ -1337,8 +2300,22 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/users/me",
               "host": [
@@ -1528,7 +2505,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"UpdatedBogdan\",\n    \"city\": \"Manchester\"\n}",
+              "raw": "{\n    \"firstName\": \"UpdatedQA\",\n    \"city\": \"Manchester\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1633,7 +2610,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Bogdan\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"bogdan@test.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1652,7 +2629,8 @@
           },
           "response": []
         }
-      ]
+      ],
+      "description": "Testing to see that the invalidated token is correctly rejected"
     },
     {
       "name": "SECURITY",
@@ -1765,7 +2743,8 @@
                     "users",
                     "login"
                   ]
-                }
+                },
+                "description": "Sends a NoSQL injection payload in the password field (`{\"$gt\": \"\"}`) attempting to bypass authentication. The API correctly rejects the attempt with a 401, confirming the login endpoint sanitises input and is not vulnerable to this attack vector"
               },
               "response": []
             },
@@ -1811,7 +2790,8 @@
                     "users",
                     "login"
                   ]
-                }
+                },
+                "description": "Sends a MongoDB `$where` operator in the request body attempting to execute arbitrary JavaScript on the database. The API correctly rejects the payload, confirming this operator is not evaluated"
               },
               "response": []
             },
@@ -1872,25 +2852,76 @@
                   "path": [
                     "contacts"
                   ]
-                }
+                },
+                "description": "Sends a MongoDB operator (`{\"$gt\": \"\"}`) as a field value when adding a contact, attempting to inject malicious data into the database. The API correctly handles the input and stores it as a plain string rather than evaluating it as a query operator"
               },
               "response": []
             }
           ]
         },
         {
-          "name": "Register User 2",
+          "name": "Login User 1",
           "event": [
             {
-              "listen": "test",
               "script": {
                 "exec": [
-                  ""
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "console.log('Token saved:', body.token);",
+                  "",
+                  "pm.test(\"[CONTRACT] Login response schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"token\", \"user\"],",
+                  "        properties: {",
+                  "            token: { type: \"string\" },",
+                  "            user: {",
+                  "                type: \"object\",",
+                  "                required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "                properties: {",
+                  "                    _id:       { type: \"string\" },",
+                  "                    firstName: { type: \"string\" },",
+                  "                    lastName:  { type: \"string\" },",
+                  "                    email:     { type: \"string\" }",
+                  "                },",
+                  "",
+                  "            }",
+                  "        },",
+                  "        additionalProperties: false",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Token is a non-empty string\", function () {",
+                  "    pm.expect(pm.response.json().token).to.be.a(\"string\").and.not.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Password not exposed in login response\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.not.have.property(\"password\");",
+                  "    pm.expect(body.user).to.not.have.property(\"password\");",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
                 "requests": {}
-              }
+              },
+              "listen": "test"
             }
           ],
           "request": {
@@ -1903,7 +2934,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Hacker\",\n  \"lastName\": \"User\",\n  \"email\": \"hacker@example.com\",\n  \"password\": \"hackerPass123\"\n}",
+              "raw": "{\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1911,12 +2942,13 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/users",
+              "raw": "{{base_url}}/users/login",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "users"
+                "users",
+                "login"
               ]
             }
           },
@@ -1931,7 +2963,14 @@
                   "pm.test(\"Status is 200\", function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
-                  "",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
                   "// Save User 2's token separately — does NOT overwrite User 1's token",
                   "const body = pm.response.json();",
                   "pm.collectionVariables.set(\"token2\", body.token);",
@@ -1955,7 +2994,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"hacker@example.com\",\n  \"password\": \"hackerPass123\"\n}",
+              "raw": "{\n  \"email\": \"hkr_9p3n@fbytu345gf.com\",\n  \"password\": \"hackerPass123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2028,7 +3067,8 @@
               "path": [
                 "contacts"
               ]
-            }
+            },
+            "description": "First step of the BOLA (Broken Object Level Authorisation) attack sequence. User 2 attempts to retrieve all contacts belonging to User 1 by using User 1's contact ID. Tests that the API correctly isolates data between users"
           },
           "response": []
         },
@@ -2046,7 +3086,7 @@
                   "",
                   "pm.test(\"[SECURITY] Response does not contain User 1's contact data\", function () {",
                   "    const text = pm.response.text();",
-                  "    pm.expect(text).to.not.include(\"bogdan@test.com\");",
+                  "    pm.expect(text).to.not.include(\"cntct_4j8q@fbytu345gf.com\");",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -2078,7 +3118,58 @@
                 "contacts",
                 "{{contactId}}"
               ]
+            },
+            "description": "User 2 attempts to retrieve a specific contact belonging to User 1 by ID. Tests that the API enforces object-level authorisation and does not expose another user's data"
+          },
+          "response": []
+        },
+        {
+          "name": "[SECURITY][VULNERABILITY] User 2 accesses account using User 1's token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[VULNERABILITY] API incorrectly accepts another user's token - returns 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[VULNERABILITY] API returns user data - token not scoped to authenticated user\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body[0]).to.have.property('_id');",
+                  "    pm.expect(body[0].owner).to.equal(pm.collectionVariables.get('userId'));",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            },
+            "description": "The API accepts User 1's token when called in the context of User 2's session, indicating token validation is not scoped to the authenticated user. This constitutes a broken authentication vulnerability"
           },
           "response": []
         },
@@ -2136,7 +3227,8 @@
                 "contacts",
                 "{{contactId}}"
               ]
-            }
+            },
+            "description": "User 2 attempts to modify a contact belonging to User 1. Tests that write operations enforce object-level authorisation and cannot be exploited to tamper with another user's data"
           },
           "response": []
         },
@@ -2180,7 +3272,8 @@
                 "contacts",
                 "{{contactId}}"
               ]
-            }
+            },
+            "description": "User 2 attempts to delete a contact belonging to User 1. Tests that destructive operations enforce object-level authorisation and cannot be used to destroy another user's data"
           },
           "response": []
         },
@@ -2196,7 +3289,7 @@
                   "});",
                   "",
                   "pm.test(\"[SECURITY] Contact data is intact\", function () {",
-                  "    pm.expect(pm.response.json().email).to.equal(\"bogdan@test.com\");",
+                  "    pm.expect(pm.response.json().email).to.equal(\"cntct_4j8q@fbytu345gf.com\");",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -2228,7 +3321,77 @@
                 "contacts",
                 "{{contactId}}"
               ]
+            },
+            "description": "Integrity check — confirms User 1's contact was not modified or deleted during the BOLA attack sequence. Logs back in as User 1 and retrieves the contact by ID to verify the data is intact"
+          },
+          "response": []
+        },
+        {
+          "name": "[SECURITY][VULNERABILITY] Brute Force Login",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let attempts = parseInt(pm.collectionVariables.get('loginAttempts') || '0');",
+                  "attempts++;",
+                  "pm.collectionVariables.set('loginAttempts', attempts);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const attempts = parseInt(pm.collectionVariables.get('loginAttempts'));",
+                  "",
+                  "pm.test(`Attempt ${attempts}: returns 401 for wrong password`, () => {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "if (attempts < 10) {",
+                  "    pm.execution.setNextRequest('[SECURITY][VULNERABILITY] Brute Force Login'); // loops back to itself",
+                  "} else {",
+                  "    pm.test('FINDING: No rate limiting after 10 attempts', () => {",
+                  "    // API returns 401 every time — 429 never triggered",
+                  "    // In production this endpoint should implement rate limiting",
+                  "    });",
+                  "    pm.collectionVariables.set('loginAttempts', '0'); // reset for re-runs",
+                  "    pm.execution.setNextRequest('Login User 1');",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"hacker@fbytu345gf.com\",\n    \"password\": \"bruteForce\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            },
+            "description": "When using the collection runner, it sends 10 consecutive failed login attempts using incorrect passwords. The API returns 401 on every attempt without triggering any rate limiting, account lockout, or CAPTCHA challenge, leaving the API exposed to brute force attacks"
           },
           "response": []
         }
@@ -2237,6 +3400,374 @@
     {
       "name": "Cleanup",
       "item": [
+        {
+          "name": "Login User 1",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.collectionVariables.set('userId', body.user._id);",
+                  "console.log('Token saved:', body.token);",
+                  "",
+                  "pm.test(\"[CONTRACT] Login response schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"token\", \"user\"],",
+                  "        properties: {",
+                  "            token: { type: \"string\" },",
+                  "            user: {",
+                  "                type: \"object\",",
+                  "                required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "                properties: {",
+                  "                    _id:       { type: \"string\" },",
+                  "                    firstName: { type: \"string\" },",
+                  "                    lastName:  { type: \"string\" },",
+                  "                    email:     { type: \"string\" }",
+                  "                },",
+                  "",
+                  "            }",
+                  "        },",
+                  "        additionalProperties: false",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Token is a non-empty string\", function () {",
+                  "    pm.expect(pm.response.json().token).to.be.a(\"string\").and.not.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Password not exposed in login response\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.not.have.property(\"password\");",
+                  "    pm.expect(body.user).to.not.have.property(\"password\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User 2",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "// Save User 2's token separately — does NOT overwrite User 1's token",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set(\"token2\", body.token);",
+                  "pm.collectionVariables.set(\"userId2\", body.user._id);",
+                  "console.log(\"User 2 token saved:\", body.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"hkr_9p3n@fbytu345gf.com\",\n  \"password\": \"hackerPass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User 3 Old Credentials",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "pm.test(\"Status is 200 - user 3 logged in\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set(\"token3\", body.token);",
+                  "pm.collectionVariables.set(\"userId3\", body.user._id);",
+                  "console.log(\"User 3 token saved:\", body.token);",
+                  "",
+                  "} else",
+                  "{",
+                  "    pm.test(\"Skip register variables — suite will self-correct via delete\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(401);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"thrd_usr_9p3n@fbytu345gf.com\",\n  \"password\": \"thirdUserPass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User 3 Update Credentials",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "pm.test(\"Status is 200 - user 3 logged in\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set(\"token3\", body.token);",
+                  "pm.collectionVariables.set(\"userId3\", body.user._id);",
+                  "console.log(\"User 3 token saved:\", body.token);",
+                  "",
+                  "} else",
+                  "{",
+                  "    pm.test(\"Skip register variables — suite will self-correct via delete\", () => {",
+                  "        pm.expect(pm.response.code).to.equal(401);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login INVALID NAMES",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains token\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.have.property('token');",
+                  "    pm.expect(body.token).to.not.be.empty;",
+                  "});",
+                  "pm.test(\"Response contains user ID\", function () {",
+                  "    pm.expect(pm.response.json().user).to.have.property('_id');",
+                  "});",
+                  "pm.test(\"Response time under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('tokenBug', body.token);",
+                  "pm.collectionVariables.set('userIdBug', body.user._id);",
+                  "console.log('Token saved:', body.token);",
+                  "",
+                  "pm.test(\"[CONTRACT] Login response schema is valid\", function () {",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        required: [\"token\", \"user\"],",
+                  "        properties: {",
+                  "            token: { type: \"string\" },",
+                  "            user: {",
+                  "                type: \"object\",",
+                  "                required: [\"_id\", \"firstName\", \"lastName\", \"email\"],",
+                  "                properties: {",
+                  "                    _id:       { type: \"string\" },",
+                  "                    firstName: { type: \"string\" },",
+                  "                    lastName:  { type: \"string\" },",
+                  "                    email:     { type: \"string\" }",
+                  "                },",
+                  "",
+                  "            }",
+                  "        },",
+                  "        additionalProperties: false",
+                  "    };",
+                  "    pm.response.to.have.jsonSchema(schema);",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Token is a non-empty string\", function () {",
+                  "    pm.expect(pm.response.json().token).to.be.a(\"string\").and.not.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"[CONTRACT] Password not exposed in login response\", function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.not.have.property(\"password\");",
+                  "    pm.expect(body.user).to.not.have.property(\"password\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"BUG_xt7k2@fbytu345gf.com\",\n    \"password\": \"BUGmyPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
         {
           "name": "Delete Contact",
           "event": [
@@ -2316,7 +3847,7 @@
           "response": []
         },
         {
-          "name": "Delete User Account",
+          "name": "Delete User 1 Account",
           "event": [
             {
               "script": {
@@ -2357,7 +3888,7 @@
           "response": []
         },
         {
-          "name": "Delete User 2",
+          "name": "Delete User 2 Account",
           "event": [
             {
               "script": {
@@ -2367,7 +3898,7 @@
                   "});",
                   "pm.collectionVariables.set('token2', '');",
                   "pm.collectionVariables.set('userId2', '');",
-                  "//pm.collectionVariables.set('contactId2', '');"
+                  "pm.collectionVariables.set('contactId2', '');"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -2382,6 +3913,88 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{token2}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User 3 Account",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200 - user deleted\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('token3', '');",
+                  "pm.collectionVariables.set('userId3', '');",
+                  "pm.collectionVariables.set('contactId3', '');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token3}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User INVALID NAMES",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200 - user deleted\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('tokenBug', '');",
+                  "pm.collectionVariables.set('userIdBug', '');",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenBug}}"
               }
             ],
             "url": {
@@ -2459,6 +4072,35 @@
       "key": "token2",
       "value": "",
       "description": "For security testing - saved automatically"
+    },
+    {
+      "key": "loginAttempts",
+      "value": "",
+      "description": "For brute force protection test"
+    },
+    {
+      "key": "token3",
+      "value": "",
+      "description": "For user tests - saved automatically"
+    },
+    {
+      "key": "userId3",
+      "value": "",
+      "description": "For user tests - saved automatically"
+    },
+    {
+      "key": "tokenBug",
+      "value": "",
+      "description": "to ensure cleanup of BUG user"
+    },
+    {
+      "key": "userIdBug",
+      "value": "",
+      "description": "to ensure cleanup of BUG user"
+    },
+    {
+      "key": "contactId3",
+      "value": ""
     }
   ]
 }
