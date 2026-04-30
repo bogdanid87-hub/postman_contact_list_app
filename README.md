@@ -68,7 +68,7 @@ All variables are set automatically. No manual setup or environment file is requ
 
 Bug #2 reproduction steps:
 > Clear the `contactId` collection variable,
-> Send `PATCH {{base_url}}/contacts/` or `DELETE {{base_url}}/contacts/` with a valid auth token.
+> Send `PATCH {{base_url}}/contacts/` or `DELETE {{base_url}}/contacts/` with or without a valid auth token.
 > The server returns a Heroku HTML error page instead of a `400 Bad Request`.
 
 ## Notes
@@ -77,5 +77,5 @@ Bug #2 reproduction steps:
 - No environment required — all variables are stored at collection level
 - The Cleanup folder runs at the end of every Collection Runner execution to remove test data
 - Security tests use a dedicated second user account (User 2) to simulate BOLA attacks — intentionally obscure email addresses are used to avoid conflicts on this shared public API
-- NoSQL injection via `$gt` operator in contact fields is blocked by Mongoose schema type validation rather than explicit input sanitisation. Fields accepting object types may remain vulnerable
-- All bugs and observations are documented inline within the relevant test scripts — response examples will be added in a future update
+- NoSQL injection via `$gt` operator in contact fields is blocked by Mongoose schema type validation rather than explicit input sanitisation
+- All bugs and observations are documented inline within the relevant test scripts 
