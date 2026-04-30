@@ -270,7 +270,89 @@
             },
             "description": "Attempts to register a user with special characters and symbols as first and last names. The API performs no input validation on the firstName & lastName fields and creates the account successfully, returning 201. Expected behaviour: 400 with a name validation error."
           },
-          "response": []
+          "response": [
+            {
+              "name": "[NEGATIVE][KNOWN BUG] Register User Invalid Names",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"§2#\",\n    \"lastName\": \"*(^5\",\n    \"email\": \"BUG_xt7k2@fbytu345gf.com\",\n    \"password\": \"BUGmyPassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "283"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:23:47 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"11b-QDSNFIhFWE1CejyVbRqyZUv0gLE\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=8zi%2FiGQ7WT8SQ3IHDIpOur4RvyEyOTgow2kp%2B4995%2BE%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541027\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=8zi%2FiGQ7WT8SQ3IHDIpOur4RvyEyOTgow2kp%2B4995%2BE%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541027\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMWZhMzgwNmQ4ZTAwMTUxYTc1ZDAiLCJpYXQiOjE3Nzc1NDEwMjd9.TxQClDmV9CV-g2VY52pBbMaWJiYmgwK33GBRlsv2Q6U; Max-Age=684; Path=/; Expires=Thu, 30 Apr 2026 09:35:11 GMT"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user\": {\n        \"_id\": \"69f31fa3806d8e00151a75d0\",\n        \"firstName\": \"§2#\",\n        \"lastName\": \"*(^5\",\n        \"email\": \"bug_xt7k2@fbytu345gf.com\",\n        \"__v\": 1\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMWZhMzgwNmQ4ZTAwMTUxYTc1ZDAiLCJpYXQiOjE3Nzc1NDEwMjd9.TxQClDmV9CV-g2VY52pBbMaWJiYmgwK33GBRlsv2Q6U\"\n}"
+            }
+          ]
         },
         {
           "name": "Register User 1",
@@ -345,7 +427,166 @@
             },
             "description": "Creates the 1st user which will be used for most tests"
           },
-          "response": []
+          "response": [
+            {
+              "name": "201 — User registered successfully (first run)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "280"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:50:13 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"118-QcGXITtUa1KFQYsR8LR68+rjWg4\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=48tGWGmYfvpDidipUKnpdXh1YRtKUotkyXYToRCy7l0%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542613\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=48tGWGmYfvpDidipUKnpdXh1YRtKUotkyXYToRCy7l0%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542613\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjVkNWI1M2Y2NDAwMTVlMDhlZjAiLCJpYXQiOjE3Nzc1NDI2MTN9.1mS3ztYWfzGUG1mVaTFgdOfEzsRFerYjzM6iqtpvNKQ; Max-Age=684; Path=/; Expires=Thu, 30 Apr 2026 10:01:37 GMT"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user\": {\n        \"_id\": \"69f325d5b53f640015e08ef0\",\n        \"firstName\": \"QA\",\n        \"lastName\": \"Test\",\n        \"email\": \"qa_xt7k2@fbytu345gf.com\",\n        \"__v\": 1\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjVkNWI1M2Y2NDAwMTVlMDhlZjAiLCJpYXQiOjE3Nzc1NDI2MTN9.1mS3ztYWfzGUG1mVaTFgdOfEzsRFerYjzM6iqtpvNKQ\"\n}"
+            },
+            {
+              "name": "400 — User already exists, suite self-corrects via Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "45"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:52:06 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"2d-UStF8qUL2UQr7lNfRS7v2APIKHk\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=GqHdx9eWsIC2RyxIE53%2FVFCB1trxToYVeG1KBbCCue4%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542726\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=GqHdx9eWsIC2RyxIE53%2FVFCB1trxToYVeG1KBbCCue4%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542726\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Email address is already in use\"\n}"
+            }
+          ]
         },
         {
           "name": "Register User 2",
@@ -797,7 +1038,90 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Login User 1",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"qa_xt7k2@fbytu345gf.com\",\n    \"password\": \"myPassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "280"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:29:19 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"118-XPNsGyrcOsHJzWH6xQJm81iRQXs\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=skR%2F4S17IGMIVqAE%2FvncTWz2I1xHz8aMrU%2BMbOFXSKA%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541359\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=skR%2F4S17IGMIVqAE%2FvncTWz2I1xHz8aMrU%2BMbOFXSKA%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541359\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjBkOWI1M2Y2NDAwMTVlMDhlYzciLCJpYXQiOjE3Nzc1NDEzNTl9.5ByEGu8mbcF2jBu0Gvs9ZnLbEjXDCtwL2-PMg50I-gE; Max-Age=36000; Path=/; Expires=Thu, 30 Apr 2026 19:29:19 GMT"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user\": {\n        \"_id\": \"69f320d9b53f640015e08ec7\",\n        \"firstName\": \"QA\",\n        \"lastName\": \"Test\",\n        \"email\": \"qa_xt7k2@fbytu345gf.com\",\n        \"__v\": 2\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjBkOWI1M2Y2NDAwMTVlMDhlYzciLCJpYXQiOjE3Nzc1NDEzNTl9.5ByEGu8mbcF2jBu0Gvs9ZnLbEjXDCtwL2-PMg50I-gE\"\n}"
+            }
+          ]
         }
       ]
     },
@@ -894,7 +1218,85 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Add Contact",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/contacts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "299"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:52:58 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"12b-FlhxAs9aChOiUbbbj5INaN1Z4TI\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=v5T4qIGEtKwxvepmjm126kzYTxXOmgbEI%2Fqccm0%2BtsU%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542778\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=v5T4qIGEtKwxvepmjm126kzYTxXOmgbEI%2Fqccm0%2BtsU%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542778\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"_id\": \"69f3267ab53f640015e08ef4\",\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\",\n    \"owner\": \"69f325d5b53f640015e08ef0\",\n    \"__v\": 0\n}"
+            }
+          ]
         },
         {
           "name": "Add Contact 2",
@@ -1002,19 +1404,18 @@
                   "pm.test(\"Each contact has _id\", function () {",
                   "    pm.response.json().forEach(function(c) { pm.expect(c).to.have.property('_id'); });",
                   "});",
-                  "pm.test(\"Response contains the expected _id values\", function () {",
-                  "    const body = pm.response.json(); // Array: [{_id: '...'}, {_id: '...'}]",
-                  "    ",
-                  "    // Explicitly pull from Collection Variables",
-                  "    const expectedId1 = pm.collectionVariables.get(\"contactId\");",
-                  "    const expectedId2 = pm.collectionVariables.get(\"contactId2\");",
                   "",
-                  "    // Check if any object in the array has the matching _id",
-                  "    const foundId1 = body.some(item => item._id === expectedId1);",
-                  "    const foundId2 = body.some(item => item._id === expectedId2);",
-                  "",
-                  "    pm.expect(foundId1, `Collection variable contactId (${expectedId1}) not found in response`).to.be.true;",
-                  "    pm.expect(foundId2, `Collection variable contactId2 (${expectedId2}) not found in response`).to.be.true;",
+                  "const body = pm.response.json(); // Array: [{_id: '...'}, {_id: '...'}]",
+                  "// Explicitly pull from Collection Variables",
+                  "const expectedId1 = pm.collectionVariables.get(\"contactId\");",
+                  "const expectedId2 = pm.collectionVariables.get(\"contactId2\");",
+                  "// Check if any object in the array has the matching contactId",
+                  "pm.test(`Response contains contactId (${expectedId1})`, function () {",
+                  "    pm.expect(body.some(item => item._id === expectedId1), \"contactId not found\").to.be.true;",
+                  "});",
+                  "// Check if any object in the array has the matching contactId2",
+                  "pm.test(`Response contains contactId2 (${expectedId2})`, function () {",
+                  "    pm.expect(body.some(item => item._id === expectedId2), \"contactId2 not found\").to.be.true;",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1047,7 +1448,81 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Get All Contacts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/contacts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "609"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:39:20 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"261-RLLZLKo7PyJ1CwY+3BP+zve5qEg\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=vt1VEEKp8lUmy9s06Y3IlUTQiPppFP%2B1k3kYMRPWt%2B8%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541960\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=vt1VEEKp8lUmy9s06Y3IlUTQiPppFP%2B1k3kYMRPWt%2B8%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541960\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"_id\": \"69f3231b806d8e00151a75df\",\n        \"firstName\": \"QA\",\n        \"lastName\": \"Test\",\n        \"birthdate\": \"1990-01-01\",\n        \"email\": \"cntct_4j8q@fbytu345gf.com\",\n        \"phone\": \"8005550100\",\n        \"street1\": \"1 Test Street\",\n        \"city\": \"London\",\n        \"stateProvince\": \"England\",\n        \"postalCode\": \"N1 8AG\",\n        \"country\": \"GB\",\n        \"owner\": \"69f322c5806d8e00151a75db\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"69f3231db53f640015e08ed3\",\n        \"firstName\": \"Adam\",\n        \"lastName\": \"Wright\",\n        \"birthdate\": \"1996-01-01\",\n        \"email\": \"cntct2_5r6w@fbytu345gf.com\",\n        \"phone\": \"8005660100\",\n        \"street1\": \"2 Test Street\",\n        \"city\": \"Liverpool\",\n        \"stateProvince\": \"England\",\n        \"postalCode\": \"L1 8AG\",\n        \"country\": \"GB\",\n        \"owner\": \"69f322c5806d8e00151a75db\",\n        \"__v\": 0\n    }\n]"
+            }
+          ]
         },
         {
           "name": "Get Contact by ID",
@@ -1138,7 +1613,82 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Get Contact by ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/contacts/{{contactId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    "{{contactId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "299"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:53:17 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"12b-FlhxAs9aChOiUbbbj5INaN1Z4TI\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=ut0LRUilQP5BiW09cGRjY6JFXhFi0Cgoefkly2rOA8A%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542797\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=ut0LRUilQP5BiW09cGRjY6JFXhFi0Cgoefkly2rOA8A%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542797\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"_id\": \"69f3267ab53f640015e08ef4\",\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\",\n    \"owner\": \"69f325d5b53f640015e08ef0\",\n    \"__v\": 0\n}"
+            }
+          ]
         },
         {
           "name": "Update Contact",
@@ -1194,7 +1744,160 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Update Contact",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"UpdatedQA\",\n    \"city\": \"Manchester\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/contacts/{{contactId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    "{{contactId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "310"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:53:43 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"136-CWrLgWzCM89AGyV1iFJVbD2HITk\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=cvYyx04l3%2FJ51VFDj%2FJM58bovHT0dgCSdh7Rsabn4lA%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542823\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=cvYyx04l3%2FJ51VFDj%2FJM58bovHT0dgCSdh7Rsabn4lA%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542823\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"_id\": \"69f3267ab53f640015e08ef4\",\n    \"firstName\": \"UpdatedQA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"Manchester\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\",\n    \"owner\": \"69f325d5b53f640015e08ef0\",\n    \"__v\": 0\n}"
+            },
+            {
+              "name": "[KNOWN BUG] PATCH /contacts/ missing ID",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"UpdatedQA\",\n    \"city\": \"Manchester\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/contacts/{{contactId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    "{{contactId}}"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html; charset=utf-8"
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MQ177B7rRTS0Bnren9qFajDUB7cEnPt03EWr04mbxNc%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541166\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=MQ177B7rRTS0Bnren9qFajDUB7cEnPt03EWr04mbxNc%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541166\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:26:36 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "567"
+                }
+              ],
+              "cookie": [],
+              "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta charset=\"utf-8\">\n        <title>Application Error</title>\n        <style media=\"screen\">\n      html,body,iframe {\n        margin: 0;\n        padding: 0;\n      }\n\n      html,body {\n        height: 100%;\n        overflow: hidden;\n      }\n\n      iframe {\n        width: 100%;\n        height: 100%;\n        border: 0;\n      }\n    </style>\n    </head>\n    <body>\n        <iframe src=\"https://www.herokucdn.com/error-pages/application-error.html\"></iframe>\n    </body>\n</html>"
+            }
+          ]
         }
       ]
     },
@@ -1497,7 +2200,7 @@
           "response": []
         },
         {
-          "name": "[NEGATIVE] Add Contact XML",
+          "name": "[NEGATIVE][OBSERVATION] Add Contact XML",
           "event": [
             {
               "listen": "test",
@@ -1551,7 +2254,91 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "[NEGATIVE][OBSERVATION] Add Contact XML",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/xml",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<root>\n  <firstName>Third</firstName>\n  <lastName>User</lastName>\n  <email>thrd_usr_9p3n@fbytu345gf.com</email>\n  <password>thirdUserPass123</password>\n</root>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/contacts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "588"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:39:35 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"24c-RpkitGTQXojRotDg91VFCCuVqVo\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JOFsi5MzEuRuXhKLLa6nWrAn0JAduSng2AbBytdcZVg%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541975\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=JOFsi5MzEuRuXhKLLa6nWrAn0JAduSng2AbBytdcZVg%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541975\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"errors\": {\n        \"lastName\": {\n            \"name\": \"ValidatorError\",\n            \"message\": \"Path `lastName` is required.\",\n            \"properties\": {\n                \"message\": \"Path `lastName` is required.\",\n                \"type\": \"required\",\n                \"path\": \"lastName\"\n            },\n            \"kind\": \"required\",\n            \"path\": \"lastName\"\n        },\n        \"firstName\": {\n            \"name\": \"ValidatorError\",\n            \"message\": \"Path `firstName` is required.\",\n            \"properties\": {\n                \"message\": \"Path `firstName` is required.\",\n                \"type\": \"required\",\n                \"path\": \"firstName\"\n            },\n            \"kind\": \"required\",\n            \"path\": \"firstName\"\n        }\n    },\n    \"_message\": \"Contact validation failed\",\n    \"message\": \"Contact validation failed: lastName: Path `lastName` is required., firstName: Path `firstName` is required.\"\n}"
+            }
+          ]
         },
         {
           "name": "[NEGATIVE] Get Contact - Invalid ID",
@@ -1863,7 +2650,82 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Get Current User",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token3}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "119"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:54:37 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"77-HiWrOkd3gJoHH3REhjAnMeMtnhU\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=N%2BXZATmfbH3JuT9cbfNswU6U5nggAiYsq7iITwmi5AA%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542877\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=N%2BXZATmfbH3JuT9cbfNswU6U5nggAiYsq7iITwmi5AA%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542877\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"_id\": \"69f326d6806d8e00151a760b\",\n    \"firstName\": \"Third\",\n    \"lastName\": \"User\",\n    \"email\": \"thrd_usr_9p3n@fbytu345gf.com\",\n    \"__v\": 2\n}"
+            }
+          ]
         },
         {
           "name": "[NEGATIVE][KNOWN BUG] Update User Email Already In Use",
@@ -1923,7 +2785,86 @@
             },
             "description": "Attempts to update User 1's email to one already registered by another account. The API correctly returns 400, but instead of a handled error message it exposes a raw MongoDB duplicate key error in the response body, leaking internal database implementation details. This constitutes an improper error handling bug and a potential information disclosure vulnerability"
           },
-          "response": []
+          "response": [
+            {
+              "name": "[NEGATIVE][KNOWN BUG] Update User Email Already In Use",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token3}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"Updated1\",\n    \"lastName\": \"Username1\",\n    \"email\": \"hkr_9p3n@fbytu345gf.com\",\n    \"password\": \"myNewPassword111\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "me"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "130"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:42:35 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"82-HRLKm1gMyUA1sJrEQwudGR0hGMo\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=9rvUDRMZCCGwFGx2pDElbfVfov3ErMtn6fkowLjHVAQ%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542155\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=9rvUDRMZCCGwFGx2pDElbfVfov3ErMtn6fkowLjHVAQ%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542155\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"driver\": true,\n    \"name\": \"MongoError\",\n    \"index\": 0,\n    \"code\": 11000,\n    \"keyPattern\": {\n        \"email\": 1\n    },\n    \"keyValue\": {\n        \"email\": \"hkr_9p3n@fbytu345gf.com\"\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Update User",
@@ -2006,7 +2947,86 @@
             },
             "description": "Verifies you can update user details"
           },
-          "response": []
+          "response": [
+            {
+              "name": "Update User",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token3}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "122"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:54:55 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"7a-R8gdCb/08hZ8WytPUdz/7NDFdOc\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=syPW5SvsaY23CydNB9%2FyCRyUBnN9bRWrtNdFCh9evOc%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542895\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=syPW5SvsaY23CydNB9%2FyCRyUBnN9bRWrtNdFCh9evOc%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542895\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"_id\": \"69f326d6806d8e00151a760b\",\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Username\",\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"__v\": 2\n}"
+            }
+          ]
         },
         {
           "name": "Logout",
@@ -2165,7 +3185,85 @@
             },
             "description": "Verifies the update user request worked correctly and the user can login with the new credentials"
           },
-          "response": []
+          "response": [
+            {
+              "name": "Login Updated Credentials",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"asds234234@fbytu345gf.com\",\n    \"password\": \"myNewPassword\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "291"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:55:09 GMT"
+                },
+                {
+                  "key": "Etag",
+                  "value": "W/\"123-LPf38x+IhCIvQ7VeH7/hBi+E7Ys\""
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=LIKO1D2o%2B5rX6scgeLgbvHc050ByiPhkSSPphm3q7jo%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542909\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=LIKO1D2o%2B5rX6scgeLgbvHc050ByiPhkSSPphm3q7jo%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542909\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjZkNjgwNmQ4ZTAwMTUxYTc2MGIiLCJpYXQiOjE3Nzc1NDI5MDl9.x0tR3Z6J26DHlccof9N_y72OJL1CJYiOkM-x6KIR6iM; Max-Age=36000; Path=/; Expires=Thu, 30 Apr 2026 19:55:09 GMT"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user\": {\n        \"_id\": \"69f326d6806d8e00151a760b\",\n        \"firstName\": \"Updated\",\n        \"lastName\": \"Username\",\n        \"email\": \"asds234234@fbytu345gf.com\",\n        \"__v\": 4\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWYzMjZkNjgwNmQ4ZTAwMTUxYTc2MGIiLCJpYXQiOjE3Nzc1NDI5MDl9.x0tR3Z6J26DHlccof9N_y72OJL1CJYiOkM-x6KIR6iM\"\n}"
+            }
+          ]
         }
       ]
     },
@@ -2746,7 +3844,73 @@
                 },
                 "description": "Sends a NoSQL injection payload in the password field (`{\"$gt\": \"\"}`) attempting to bypass authentication. The API correctly rejects the attempt with a 401, confirming the login endpoint sanitises input and is not vulnerable to this attack vector"
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Login NoSQL injection attempt",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": { \"$gt\": \"\" },\n  \"password\": { \"$gt\": \"\" }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/users/login",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "users",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 30 Apr 2026 09:55:43 GMT"
+                    },
+                    {
+                      "key": "Nel",
+                      "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                    },
+                    {
+                      "key": "Report-To",
+                      "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=14s0LxF0uceibpc5txPPpcUmPjqksjL%2BZG4OGOmQ2hk%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542943\"}],\"max_age\":3600}"
+                    },
+                    {
+                      "key": "Reporting-Endpoints",
+                      "value": "heroku-nel=\"https://nel.heroku.com/reports?s=14s0LxF0uceibpc5txPPpcUmPjqksjL%2BZG4OGOmQ2hk%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542943\""
+                    },
+                    {
+                      "key": "Server",
+                      "value": "Heroku"
+                    },
+                    {
+                      "key": "Via",
+                      "value": "1.1 heroku-router"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "Express"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
             },
             {
               "name": "$where operator injection",
@@ -3121,57 +4285,75 @@
             },
             "description": "User 2 attempts to retrieve a specific contact belonging to User 1 by ID. Tests that the API enforces object-level authorisation and does not expose another user's data"
           },
-          "response": []
-        },
-        {
-          "name": "[SECURITY][VULNERABILITY] User 2 accesses account using User 1's token",
-          "event": [
+          "response": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"[VULNERABILITY] API incorrectly accepts another user's token - returns 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"[VULNERABILITY] API returns user data - token not scoped to authenticated user\", function () {",
-                  "    const body = pm.response.json();",
-                  "    pm.expect(body[0]).to.have.property('_id');",
-                  "    pm.expect(body[0].owner).to.equal(pm.collectionVariables.get('userId'));",
-                  "});"
+              "name": "[SECURITY] User 2 reads User 1's contact by ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token2}}",
+                    "type": "text"
+                  }
                 ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
+                "url": {
+                  "raw": "{{base_url}}/contacts/{{contactId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    "{{contactId}}"
+                  ]
+                }
               },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/contacts",
-              "host": [
-                "{{base_url}}"
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "0"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:38:46 GMT"
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=FR5JCRqsQh7MpHATmTHPVYVqCt8jQLy4esKtNsNUOAI%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777541926\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=FR5JCRqsQh7MpHATmTHPVYVqCt8jQLy4esKtNsNUOAI%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777541926\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
               ],
-              "path": [
-                "contacts"
-              ]
-            },
-            "description": "The API accepts User 1's token when called in the context of User 2's session, indicating token validation is not scoped to the authenticated user. This constitutes a broken authentication vulnerability"
-          },
-          "response": []
+              "cookie": [],
+              "body": null
+            }
+          ]
         },
         {
           "name": "[SECURITY] User 2 updates User 1's contact",
@@ -3393,7 +4575,85 @@
             },
             "description": "When using the collection runner, it sends 10 consecutive failed login attempts using incorrect passwords. The API returns 401 on every attempt without triggering any rate limiting, account lockout, or CAPTCHA challenge, leaving the API exposed to brute force attacks"
           },
-          "response": []
+          "response": [
+            {
+              "name": "[SECURITY][VULNERABILITY][10th Attempt] Brute Force Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"hacker@fbytu345gf.com\",\n    \"password\": \"bruteForce\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "0"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 30 Apr 2026 09:43:47 GMT"
+                },
+                {
+                  "key": "Nel",
+                  "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=FJgJ6qUwWT0%2BWtGRCq39vEvx9%2F9u5x8YYRr%2Fba3uJAw%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542227\"}],\"max_age\":3600}"
+                },
+                {
+                  "key": "Reporting-Endpoints",
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=FJgJ6qUwWT0%2BWtGRCq39vEvx9%2F9u5x8YYRr%2Fba3uJAw%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542227\""
+                },
+                {
+                  "key": "Server",
+                  "value": "Heroku"
+                },
+                {
+                  "key": "Via",
+                  "value": "1.1 heroku-router"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            }
+          ]
         }
       ]
     },
