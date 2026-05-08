@@ -3,6 +3,8 @@ name: Contact List API Tests
 on:
   push:
     branches: [main]
+    paths:
+      - '*.json'
   workflow_dispatch:
 
 jobs:
@@ -14,11 +16,7 @@ jobs:
         run: npm install -g newman newman-reporter-htmlextra
 
       - name: Run collection
-        run: |
-          newman run \
-            "https://api.getpostman.com/collections/${{ secrets.POSTMAN_COLLECTION_ID }}?apikey=${{ secrets.POSTMAN_API_KEY }}" \
-            --reporters cli,htmlextra \
-            --reporter-htmlextra-export results/report.html
+        run: newman run "https://api.getpostman.com/collections/${{ secrets.POSTMAN_COLLECTION_ID }}?apikey=${{ secrets.POSTMAN_API_KEY }}" --reporters cli,htmlextra --reporter-htmlextra-export results/report.html
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
