@@ -1141,7 +1141,7 @@
                   "    pm.expect(pm.response.json()).to.have.property('_id');",
                   "});",
                   "pm.test(\"First name matches\", function () {",
-                  "    pm.expect(pm.response.json().firstName).to.equal('QA');",
+                  "    pm.expect(pm.response.json().firstName).to.equal('Q');",
                   "});",
                   "pm.test(\"Email matches\", function () {",
                   "    pm.expect(pm.response.json().email).to.equal('cntct_4j8q@fbytu345gf.com');",
@@ -1201,7 +1201,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"Q\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1216,7 +1216,8 @@
               "path": [
                 "contacts"
               ]
-            }
+            },
+            "description": "Also checks boundary value 1 character for first name field"
           },
           "response": [
             {
@@ -1231,7 +1232,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+                  "raw": "{\n    \"firstName\": \"Q\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1254,7 +1255,7 @@
               "header": [
                 {
                   "key": "Content-Length",
-                  "value": "299"
+                  "value": "298"
                 },
                 {
                   "key": "Content-Type",
@@ -1262,11 +1263,11 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 09:52:58 GMT"
+                  "value": "Fri, 08 May 2026 14:09:12 GMT"
                 },
                 {
                   "key": "Etag",
-                  "value": "W/\"12b-FlhxAs9aChOiUbbbj5INaN1Z4TI\""
+                  "value": "W/\"12a-wnlPO7xWNhy4jxZMt4fOI9t8I2M\""
                 },
                 {
                   "key": "Nel",
@@ -1274,11 +1275,11 @@
                 },
                 {
                   "key": "Report-To",
-                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=v5T4qIGEtKwxvepmjm126kzYTxXOmgbEI%2Fqccm0%2BtsU%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1777542778\"}],\"max_age\":3600}"
+                  "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=XNqrjCt1lFuSTvFGRhGizl%2F1KVnwGtrFcZWfs9M%2FiVo%3D\\u0026sid=af571f24-03ee-46d1-9f90-ab9030c2c74c\\u0026ts=1778249352\"}],\"max_age\":3600}"
                 },
                 {
                   "key": "Reporting-Endpoints",
-                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=v5T4qIGEtKwxvepmjm126kzYTxXOmgbEI%2Fqccm0%2BtsU%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1777542778\""
+                  "value": "heroku-nel=\"https://nel.heroku.com/reports?s=XNqrjCt1lFuSTvFGRhGizl%2F1KVnwGtrFcZWfs9M%2FiVo%3D&sid=af571f24-03ee-46d1-9f90-ab9030c2c74c&ts=1778249352\""
                 },
                 {
                   "key": "Server",
@@ -1294,7 +1295,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"_id\": \"69f3267ab53f640015e08ef4\",\n    \"firstName\": \"QA\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\",\n    \"owner\": \"69f325d5b53f640015e08ef0\",\n    \"__v\": 0\n}"
+              "body": "{\n    \"_id\": \"69fdee887d720e00154cfb3d\",\n    \"firstName\": \"Q\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\",\n    \"owner\": \"69fde937e3bc41001569cf1e\",\n    \"__v\": 0\n}"
             }
           ]
         },
@@ -1311,7 +1312,7 @@
                   "    pm.expect(pm.response.json()).to.have.property('_id');",
                   "});",
                   "pm.test(\"First name matches\", function () {",
-                  "    pm.expect(pm.response.json().firstName).to.equal('Adam');",
+                  "    pm.expect(pm.response.json().firstName).to.equal('Adammmmmmmmmmmmmmmmm');",
                   "});",
                   "pm.test(\"Email matches\", function () {",
                   "    pm.expect(pm.response.json().email).to.equal('cntct2_5r6w@fbytu345gf.com');",
@@ -1370,7 +1371,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"firstName\": \"Adam\",\n    \"lastName\": \"Wright\",\n    \"birthdate\": \"1996-01-01\",\n    \"email\": \"cntct2_5r6w@fbytu345gf.com\",\n    \"phone\": \"8005660100\",\n    \"street1\": \"2 Test Street\",\n    \"city\": \"Liverpool\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"L1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "raw": "{\n    \"firstName\": \"Adammmmmmmmmmmmmmmmm\",\n    \"lastName\": \"Wright\",\n    \"birthdate\": \"1996-01-01\",\n    \"email\": \"cntct2_5r6w@fbytu345gf.com\",\n    \"phone\": \"8005660100\",\n    \"street1\": \"2 Test Street\",\n    \"city\": \"Liverpool\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"L1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1385,7 +1386,8 @@
               "path": [
                 "contacts"
               ]
-            }
+            },
+            "description": "Also checks boundary value 20 character (max) for first name field"
           },
           "response": []
         },
@@ -2080,6 +2082,156 @@
             "body": {
               "mode": "raw",
               "raw": "{\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - First Name Empty",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: firstName: Path `firstName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - First Name null",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: firstName: Path `firstName` is required.\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": null,\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[NEGATIVE] Add Contact - First Name 21 Characters",
+          "event": [
+            {
+              "script": {
+                "exec": [
+                  "pm.test(\"Does not create contact with empty body\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"Error is Contact validation failed\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.equal(\"Contact validation failed: firstName: Path `firstName` (`aaaaaaaaaaaaaaaaaaaaa`) is longer than the maximum allowed length (20).\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              },
+              "listen": "test"
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"aaaaaaaaaaaaaaaaaaaaa\",\n    \"lastName\": \"Test\",\n    \"birthdate\": \"1990-01-01\",\n    \"email\": \"cntct_4j8q@fbytu345gf.com\",\n    \"phone\": \"8005550100\",\n    \"street1\": \"1 Test Street\",\n    \"city\": \"London\",\n    \"stateProvince\": \"England\",\n    \"postalCode\": \"N1 8AG\",\n    \"country\": \"GB\"\n}\n",
               "options": {
                 "raw": {
                   "language": "json"
